@@ -89,25 +89,26 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}));
 
 const demoActivity = [
-  ["PixelFox","AK-47 | Азимов","только что",""],
+  ["PixelFox","AK-47 | Азимов","сейчас",""],
   ["NovaRush","AWP | Неонуар","8 сек. назад","purple"],
   ["ByteHunter","★ Нож | Допплер","19 сек. назад","gold"],
   ["EchoStrike","USP-S | Чёрный лотос","33 сек. назад","green"],
   ["CloudTap","M4A1-S | Поток информации","46 сек. назад","purple"],
-  ["VexZero","Desert Eagle | Код красный","58 сек. назад",""]
+  ["VexZero","Desert Eagle | Код красный","58 сек. назад",""],
+  ["FrostByte","Glock-18 | Лунная ночь","1 мин. назад","green"],
+  ["NightShift","M4A4 | Император","2 мин. назад","gold"],
+  ["BlueNova","P250 | Азимов","2 мин. назад","purple"],
+  ["ZeroPulse","FAMAS | Механо-пушка","3 мин. назад",""],
+  ["StarRider","MAC-10 | Неоновый гонщик","4 мин. назад","green"],
+  ["IceWolf","SSG 08 | Кровь в воде","5 мин. назад","gold"]
 ];
-let activityIndex = 0;
-setInterval(() => {
-  const track = document.getElementById('tickerTrack');
-  if (!track) return;
-  activityIndex = (activityIndex + 1) % demoActivity.length;
-  const [name, skin, when, tone] = demoActivity[activityIndex];
-  const item = document.createElement('div');
-  item.className = 'ticker-item';
-  item.innerHTML = `<span class="avatar ${tone}">♟</span><span><b>${name}</b><small>демо-предмет: ${skin}</small></span><em>${when}</em>`;
-  track.appendChild(item);
-  while (track.children.length > 5) track.removeChild(track.firstElementChild);
-}, 7000);
+const tickerTrack = document.getElementById('tickerTrack');
+if (tickerTrack) {
+  const tickerItems = demoActivity.concat(demoActivity);
+  tickerTrack.innerHTML = tickerItems.map(([name, skin, when, tone], index) =>
+    '<div class="ticker-item"><span class="avatar '+tone+'">'+(index % 2 ? '✦' : '♟')+'</span><span><b>'+name+'</b><small>ДЕМО-ПРЕДМЕТ: '+skin+'</small></span><em>'+when+'</em></div>'
+  ).join('');
+}
 
 </script>
 </body></html>
