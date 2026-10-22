@@ -25,7 +25,8 @@ main{max-width:1240px;margin:auto;padding:24px}.hero{display:grid;grid-template-
 .avatar{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#143b64;color:#78bdff}
 .avatar.purple{background:#33205e;color:#c3a4ff}.avatar.gold{background:#4d3917;color:#ffd36e}.avatar.green{background:#164635;color:#80efba}
 .ticker-note{font-size:10px;color:#7790ad;margin:8px 0 0}
-\n</style>
+
+</style>
 </head>
 <body>
 <header><div class="logo">📦 <b>CS2</b> CASES</div><nav><a href="#cases">Кейсы</a><a href="#games">Мини-игры</a><a href="#how">Как это работает</a><a href="#legal">Документы</a></nav><button id="steamBtn">◉ Войти через Steam</button></header>
@@ -33,6 +34,14 @@ main{max-width:1240px;margin:auto;padding:24px}.hero{display:grid;grid-template-
 <section class="hero">
 <div><div class="eyebrow">КЕЙСЫ ДЛЯ COUNTER-STRIKE 2</div><h1>ОТКРЫВАЙ КЕЙСЫ<br>ПОЛУЧАЙ <span>СКИНЫ</span></h1><p class="lead">Концепт платформы для открытия кейсов и бесплатных мини-игр. Это демонстрационный интерфейс: реальные платежи, Steam OAuth и передача предметов не подключены.</p><button id="tradeBtn">🔗 Добавить торговую ссылку</button> <button class="secondary" onclick="document.querySelector('#cases').scrollIntoView({behavior:'smooth'})">Смотреть кейсы ↓</button><p class="small">🔒 Никогда не вводите пароль Steam на стороннем сайте. Авторизация должна проходить только на домене Steam.</p></div>
 <div class="panel" id="how"><h2>🛡️ Как выдаётся приз</h2><div class="flow"><div><strong>①</strong>Выигрыш в демо</div><div><strong>→</strong>Проверка</div><div><strong>③</strong>Подтверждённый обмен</div></div><p class="notice">Передача предмета должна быть видимой и подтверждённой владельцем аккаунта. Автопокупка на стороннем маркете возможна только после подключения официального API и соблюдения его условий.</p></div>
+</section>
+<section class="ticker" aria-label="Демо-активность">
+  <div class="ticker-head"><span class="live-dot"></span> ДЕМО-АКТИВНОСТЬ <span class="small">· примеры, не реальные выигрыши</span></div>
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item"><span class="avatar">♟</span><span><b>PixelFox</b><small>демо-предмет: AK-47 | Азимов</small></span><em>пример</em></div>
+    <div class="ticker-item"><span class="avatar purple">♟</span><span><b>NovaRush</b><small>демо-предмет: AWP | Неонуар</small></span><em>пример</em></div>
+  </div>
+  <p class="ticker-note">Имена, предметы и события вымышлены и генерируются локально; это не реальные выигрыши пользователей.</p>
 </section>
 <div class="features"><div class="feature"><strong>🎁 Бесплатные игры</strong>Мини-игры для развлечения</div><div class="feature"><strong>📊 Прозрачная экономика</strong>Вероятности и ожидаемые выплаты публикуются</div><div class="feature"><strong>🔐 Безопасность</strong>Без хранения пароля Steam</div><div class="feature"><strong>📜 Правила</strong>Оферта и политика конфиденциальности</div></div>
 <section id="cases"><div class="section-head"><h2>Популярные кейсы</h2><span class="tag">ДЕМО · БЕЗ СПИСАНИЯ СРЕДСТВ</span></div><div class="cards">
@@ -77,7 +86,8 @@ function openCase(name){show(name,`<p>Симуляция открытия кей
 function playGame(name){const win=Math.random()<.01;show(name,`<p>Бесплатная демо-попытка завершена.</p><div class="result">${win?'🎉 Условный приз!':'В этот раз без приза'}</div><p class="small">Результат симулирован в браузере, его нельзя обменять на предмет или деньги.</p><button onclick="closeModal()">Закрыть</button>`)}
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}));\n
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}));
+
 const demoActivity = [
   ["PixelFox","AK-47 | Азимов","только что",""],
   ["NovaRush","AWP | Неонуар","8 сек. назад","purple"],
