@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CS2 CASES — демо-концепт</title>
+<style>
+:root{--bg:#050b15;--panel:#091526;--line:#163454;--blue:#2785ff;--cyan:#54c7ff;--text:#eef5ff;--muted:#9bb2d0;--gold:#ffb72e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 55% 0%,#10294a 0,transparent 45%),var(--bg);color:var(--text);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}
+a{color:var(--cyan)}button,input{font:inherit}button{cursor:pointer;border:1px solid #2877ce;background:linear-gradient(135deg,#1478f9,#36a4ff);color:white;border-radius:9px;padding:12px 16px;font-weight:700}button.secondary{background:#08172a;border-color:#24547e}button:disabled{opacity:.45;cursor:not-allowed}
+header{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100% - 1240px)/2));gap:24px;position:sticky;top:0;background:#050b15ed;backdrop-filter:blur(12px);z-index:3}
+.logo{font-size:24px;font-weight:900;font-style:italic;letter-spacing:1px}.logo b{color:var(--blue)}nav{display:flex;gap:22px;flex-wrap:wrap}nav a{text-decoration:none;color:#c7d8ef;font-size:14px}
+main{max-width:1240px;margin:auto;padding:24px}.hero{display:grid;grid-template-columns:1.3fr .8fr;gap:24px;align-items:center;min-height:310px}.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:1px}.hero h1{font-size:clamp(30px,4vw,50px);line-height:1.05;margin:12px 0}.hero h1 span{color:var(--blue)}.lead{max-width:610px;color:#bdd0e8}.panel,.case,.game,.legal{border:1px solid var(--line);background:linear-gradient(145deg,#0b1a2d,#07111f);border-radius:14px}.panel{padding:22px}.flow{display:flex;justify-content:space-between;align-items:center;text-align:center;gap:8px;margin:24px 0}.flow div{flex:1;color:var(--muted);font-size:13px}.flow strong{display:block;color:var(--text);font-size:22px;margin-bottom:6px}.notice{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.feature{padding:15px;border-left:1px solid var(--line);color:var(--muted)}.feature strong{display:block;color:var(--text);margin-bottom:5px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px}.section-head h2{margin:0;font-size:22px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.case{overflow:hidden;padding:14px}.crate{height:125px;border-radius:10px;display:grid;place-items:center;font-size:58px;background:radial-gradient(circle,#173d67,#07111f 68%);border:1px solid #1c4672}.case h3{margin:12px 0 2px}.muted{color:var(--muted);font-size:13px}.price{color:var(--gold);font-weight:900;font-size:18px;margin:8px 0}.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.game{padding:17px}.game .emoji{font-size:34px}.game h3{margin:7px 0}.game button{width:100%;margin-top:10px}.legal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.legal{padding:18px}.legal h3{margin-top:0}.small{font-size:12px;color:var(--muted)}footer{border-top:1px solid var(--line);margin-top:34px;padding:24px max(24px,calc((100% - 1240px)/2));display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:5;place-items:center;padding:20px}.modal.show{display:grid}.dialog{width:min(480px,100%);background:#091729;border:1px solid #28527b;border-radius:16px;padding:24px}.dialog h2{margin-top:0}.dialog input{width:100%;padding:12px;background:#040c17;border:1px solid #28445f;border-radius:8px;color:white;margin:8px 0 14px}.result{font-size:20px;font-weight:800;color:var(--cyan);padding:14px 0}.tag{display:inline-block;border:1px solid #1d4b77;border-radius:20px;padding:4px 9px;font-size:11px;color:var(--cyan)}
+@media(max-width:850px){header{height:auto;padding:16px 20px;align-items:flex-start;flex-direction:column}.hero{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.cards,.game-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){main{padding:16px}.cards,.game-grid,.legal-grid{grid-template-columns:1fr}.features{grid-template-columns:1fr}.flow{flex-direction:column}}
+
+.ticker{border:1px solid #183b5d;background:linear-gradient(110deg,#08172a,#07111e);border-radius:12px;padding:12px 16px;margin:0 0 22px;overflow:hidden}
+.ticker-head{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.7px;color:#dceaff;margin-bottom:10px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#48d597;box-shadow:0 0 10px #48d597;display:inline-block}
+.ticker-track{display:flex;gap:10px;overflow-x:auto;padding-bottom:3px}
+.ticker-item{display:flex;align-items:center;gap:9px;min-width:245px;border:1px solid #17324f;background:#091426;border-radius:9px;padding:9px 11px}
+.ticker-item span:nth-child(2){display:flex;flex-direction:column;min-width:0}
+.ticker-item b{font-size:12px;color:#eef5ff}.ticker-item small{font-size:11px;color:#a9c0dd;white-space:nowrap}
+.ticker-item em{font-size:10px;color:#6f8ba9;font-style:normal;margin-left:auto;white-space:nowrap}
+.avatar{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#143b64;color:#78bdff}
+.avatar.purple{background:#33205e;color:#c3a4ff}.avatar.gold{background:#4d3917;color:#ffd36e}.avatar.green{background:#164635;color:#80efba}
+.ticker-note{font-size:10px;color:#7790ad;margin:8px 0 0}
+\n</style>
+</head>
+<body>
+<header><div class="logo">📦 <b>CS2</b> CASES</div><nav><a href="#cases">Кейсы</a><a href="#games">Мини-игры</a><a href="#how">Как это работает</a><a href="#legal">Документы</a></nav><button id="steamBtn">◉ Войти через Steam</button></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">КЕЙСЫ ДЛЯ COUNTER-STRIKE 2</div><h1>ОТКРЫВАЙ КЕЙСЫ<br>ПОЛУЧАЙ <span>СКИНЫ</span></h1><p class="lead">Концепт платформы для открытия кейсов и бесплатных мини-игр. Это демонстрационный интерфейс: реальные платежи, Steam OAuth и передача предметов не подключены.</p><button id="tradeBtn">🔗 Добавить торговую ссылку</button> <button class="secondary" onclick="document.querySelector('#cases').scrollIntoView({behavior:'smooth'})">Смотреть кейсы ↓</button><p class="small">🔒 Никогда не вводите пароль Steam на стороннем сайте. Авторизация должна проходить только на домене Steam.</p></div>
+<div class="panel" id="how"><h2>🛡️ Как выдаётся приз</h2><div class="flow"><div><strong>①</strong>Выигрыш в демо</div><div><strong>→</strong>Проверка</div><div><strong>③</strong>Подтверждённый обмен</div></div><p class="notice">Передача предмета должна быть видимой и подтверждённой владельцем аккаунта. Автопокупка на стороннем маркете возможна только после подключения официального API и соблюдения его условий.</p></div>
+</section>
+<div class="features"><div class="feature"><strong>🎁 Бесплатные игры</strong>Мини-игры для развлечения</div><div class="feature"><strong>📊 Прозрачная экономика</strong>Вероятности и ожидаемые выплаты публикуются</div><div class="feature"><strong>🔐 Безопасность</strong>Без хранения пароля Steam</div><div class="feature"><strong>📜 Правила</strong>Оферта и политика конфиденциальности</div></div>
+<section id="cases"><div class="section-head"><h2>Популярные кейсы</h2><span class="tag">ДЕМО · БЕЗ СПИСАНИЯ СРЕДСТВ</span></div><div class="cards">
+<article class="case"><div class="crate">🔥📦</div><h3>Горящий кейс</h3><div class="muted">Коллекция огненных скинов</div><div class="price">$2.99</div><button onclick="openCase('Горящий кейс')">Открыть демо</button></article>
+<article class="case"><div class="crate">🔷📦</div><h3>Кейс «Изум»</h3><div class="muted">Синие и редкие предметы</div><div class="price">$4.99</div><button onclick="openCase('Кейс «Изум»')">Открыть демо</button></article>
+<article class="case"><div class="crate">🟣📦</div><h3>Тайное оружие</h3><div class="muted">Фиолетовая коллекция</div><div class="price">$9.99</div><button onclick="openCase('Тайное оружие')">Открыть демо</button></article>
+<article class="case"><div class="crate">🟡📦</div><h3>Кейс «Нож»</h3><div class="muted">Предметы высокой редкости</div><div class="price">$19.99</div><button onclick="openCase('Кейс «Нож»')">Открыть демо</button></article>
+</div></section>
+<section id="games"><div class="section-head"><h2>Бесплатные мини-игры</h2><span class="tag">ДЕМО-РЕЖИМ</span></div><div class="game-grid">
+<div class="game"><div class="emoji">💣</div><h3>Кейс с бомбой</h3><div class="muted">Открой безопасный контейнер. Демонстрационная игра без реальных призов.</div><button onclick="playGame('Кейс с бомбой')">Играть бесплатно</button></div>
+<div class="game"><div class="emoji">🎡</div><h3>Колесо удачи</h3><div class="muted">Вращение с опубликованной вероятностью. Демонстрационная игра без реальных призов.</div><button onclick="playGame('Колесо удачи')">Крутить</button></div>
+<div class="game"><div class="emoji">💣</div><h3>Минное поле</h3><div class="muted">Выбери клетку. Демонстрационная игра без реальных призов.</div><button onclick="playGame('Минное поле')">Играть бесплатно</button></div>
+<div class="game"><div class="emoji">⚔️</div><h3>Дуэль</h3><div class="muted">Симуляция дуэли без ставок и денежных призов.</div><button onclick="playGame('Дуэль')">Начать дуэль</button></div>
+</div><p class="small">Все игры в этом прототипе демонстрационные: результаты не имеют денежной ценности и не выдаются как реальные предметы.</p></section>
+<section id="legal"><div class="section-head"><h2>Юридическая информация</h2><span class="tag">ШАБЛОНЫ ДЛЯ ЮРИДИЧЕСКОЙ ПРОВЕРКИ</span></div><div class="legal-grid">
+<article class="legal"><h3>Политика конфиденциальности</h3><p>Сервис должен собирать только данные, необходимые для авторизации, поддержки и исполнения операций. Пароли Steam не запрашиваются и не хранятся. Если используются Steam OpenID, торговая ссылка или журналы событий, в окончательной политике нужно указать состав данных, цели, сроки хранения, правовое основание, получателей, меры защиты и порядок обращения пользователя.</p><p class="small">До запуска заполните реквизиты оператора, юрисдикцию, контакт для запросов и сведения о сторонних обработчиках. Этот текст — заготовка, а не юридическая консультация.</p></article>
+<article class="legal"><h3>Публичная оферта</h3><p>До запуска оферта должна описывать оператора, возрастные ограничения, предмет договора, цены, вероятности выпадения, порядок выдачи и возврата, спорные операции, ограничения сервиса, поддержку и применимое право. Нельзя обещать гарантированный доход или скрывать вероятности.</p><p class="small">Отдельно проверьте законность кейсов и призовых механик в целевых странах, правила Steam/Valve и условия маркетплейса. Потребуется юридическая проверка перед приёмом платежей.</p></article>
+</div></section>
+</main>
+<footer><div><b>📦 CS2 CASES</b><br>Демонстрационный прототип</div><div><a href="#legal">Политика конфиденциальности</a> · <a href="#legal">Оферта</a></div><div>Не аффилирован с Valve Corporation или Counter-Strike 2.</div></footer>
+<div class="modal" id="modal"><div class="dialog"><button class="secondary" style="float:right;padding:5px 10px" onclick="closeModal()">✕</button><h2 id="modalTitle">Демо</h2><div id="modalBody"></div></div></div>
+<script>
+const modal=document.getElementById('modal');
+function show(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;modal.classList.add('show')}
+function closeModal(){modal.classList.remove('show')}
+document.getElementById('steamBtn').onclick=()=>show('Вход / тестовый профиль',`
+<p>Для проверки интерфейса можно войти в локальный тестовый профиль. Это не авторизует Steam и не открывает доступ к инвентарю.</p>
+<label for="demoName">Имя профиля</label><input id="demoName" maxlength="24" placeholder="Например, PlayerOne">
+<button onclick="loginDemo()">Войти в демо</button>
+<p class="small" style="margin-top:12px">Для реального входа используйте Steam OpenID на сервере. Пароль Steam на этом сайте вводить нельзя.</p>
+<button class="secondary" onclick="window.open('https://steamcommunity.com/openid/login','_blank','noopener')">Открыть Steam для проверки</button>
+`);
+document.getElementById('tradeBtn').onclick=()=>show('Торговая ссылка',`<label for="trade">Вставьте торговую ссылку Steam</label><input id="trade" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=…"><p class="small">Ссылка хранится только в интерфейсе этой демо-страницы и никуда не отправляется.</p><button onclick="saveTrade()">Проверить формат</button><div id="tradeResult" class="small"></div>`);
+function loginDemo(){
+  const input=document.getElementById('demoName');
+  const name=(input?.value || 'DemoPlayer').trim().slice(0,24) || 'DemoPlayer';
+  document.getElementById('steamBtn').textContent='👤 '+name;
+  show('Тестовый профиль активен',`<p>Вы вошли как <b>${name.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}</b>.</p><p>Это локальный демо-сеанс: Steam-аккаунт не подключён, инвентарь и обмены недоступны.</p><button onclick="closeModal()">Продолжить</button>`);
+}
+function saveTrade(){const v=document.getElementById('trade').value;const ok=/^https:\/\/steamcommunity\.com\/tradeoffer\/new\/\?/.test(v);document.getElementById('tradeResult').textContent=ok?'Формат похож на торговую ссылку. Демо не сохраняет её и не отправляет предметы.':'Проверьте адрес: ожидается ссылка steamcommunity.com/tradeoffer/new/…';}
+function openCase(name){show(name,`<p>Симуляция открытия кейса.</p><div class="result">${Math.random()<.3?'✨ Демо-приз выпал!':'Попробуй ещё раз — это только демонстрация.'}</div><p class="small">Нет оплаты, реальных предметов или отправки трейда. Вероятности и цены здесь иллюстративны.</p><button onclick="closeModal()">Закрыть</button>`)}
+function playGame(name){const win=Math.random()<.01;show(name,`<p>Бесплатная демо-попытка завершена.</p><div class="result">${win?'🎉 Условный приз!':'В этот раз без приза'}</div><p class="small">Результат симулирован в браузере, его нельзя обменять на предмет или деньги.</p><button onclick="closeModal()">Закрыть</button>`)}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'})}));\n
+const demoActivity = [
+  ["PixelFox","AK-47 | Азимов","только что",""],
+  ["NovaRush","AWP | Неонуар","8 сек. назад","purple"],
+  ["ByteHunter","★ Нож | Допплер","19 сек. назад","gold"],
+  ["EchoStrike","USP-S | Чёрный лотос","33 сек. назад","green"],
+  ["CloudTap","M4A1-S | Поток информации","46 сек. назад","purple"],
+  ["VexZero","Desert Eagle | Код красный","58 сек. назад",""]
+];
+let activityIndex = 0;
+setInterval(() => {
+  const track = document.getElementById('tickerTrack');
+  if (!track) return;
+  activityIndex = (activityIndex + 1) % demoActivity.length;
+  const [name, skin, when, tone] = demoActivity[activityIndex];
+  const item = document.createElement('div');
+  item.className = 'ticker-item';
+  item.innerHTML = `<span class="avatar ${tone}">♟</span><span><b>${name}</b><small>выиграл ${skin}</small></span><em>${when}</em>`;
+  track.appendChild(item);
+  while (track.children.length > 5) track.removeChild(track.firstElementChild);
+}, 7000);
+
+</script>
+</body></html>
